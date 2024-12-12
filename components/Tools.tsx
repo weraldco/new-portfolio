@@ -7,6 +7,7 @@ import {
 	BiBold,
 	BiCodeAlt,
 	BiCodeCurly,
+	BiImage,
 	BiItalic,
 	BiListOl,
 	BiListUl,
@@ -17,6 +18,7 @@ import ToolButton from './ToolButton';
 
 interface Props {
 	editor: Editor | null;
+	onImageSelection?(): void;
 }
 
 const tools = [
@@ -64,6 +66,10 @@ const tools = [
 		task: 'bulletList',
 		icon: <BiListUl />,
 	},
+	{
+		task: 'image',
+		icon: <BiImage />,
+	},
 ] as const;
 
 const chainMethod = (
@@ -77,7 +83,7 @@ const chainMethod = (
 
 type TaskType = (typeof tools)[number]['task'];
 
-export default function Tools({ editor }: Props) {
+export default function Tools({ editor, onImageSelection }: Props) {
 	const handleOnClick = (task: TaskType) => {
 		switch (task) {
 			case 'bold':
@@ -103,6 +109,8 @@ export default function Tools({ editor }: Props) {
 				return chainMethod(editor, (chain) => chain.setTextAlign('center'));
 			case 'right':
 				return chainMethod(editor, (chain) => chain.setTextAlign('right'));
+			case 'image':
+				return onImageSelection && onImageSelection();
 		}
 	};
 

@@ -13,7 +13,7 @@ export default function GalleryImage({
 	onSelectClick,
 }: Props) {
 	return (
-		<div className=" relative w-full aspect-square overflow-hidden rounded-xl">
+		<div className="group relative w-full aspect-square overflow-hidden rounded-xl">
 			<Image
 				src={src}
 				alt="image"
@@ -21,7 +21,7 @@ export default function GalleryImage({
 				height={100}
 				className="w-full h-full object-cover "
 			/>
-			<div className="flex absolute bottom-0 right-0 left-0">
+			<div className="hidden group-hover:flex absolute bottom-0 right-0 left-0">
 				<button
 					onClick={onDeleteClick}
 					className="flex-1 bg-red-400 text-white flex items-center justify-center p-2"

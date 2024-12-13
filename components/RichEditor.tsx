@@ -1,5 +1,7 @@
 'use client';
 
+import Image from '@tiptap/extension-image';
+import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
 import TextAlign from '@tiptap/extension-text-align';
 import Underline from '@tiptap/extension-underline';
@@ -9,12 +11,26 @@ import { useState } from 'react';
 import ImageGallery from './ImageGallery';
 import Tools from './Tools';
 
-const Tiptap = () => {
+const RichEditor = () => {
 	const [showImageGallery, setShowImageGallery] = useState(false);
 	const editor = useEditor({
 		extensions: [
 			StarterKit,
 			Underline,
+			Image.configure({
+				inline: false,
+				HTMLAttributes: {
+					class: 'w-[80%] mx-auto',
+				},
+			}),
+			Link.configure({
+				openOnClick: false,
+				autolink: false,
+				linkOnPaste: true,
+				HTMLAttributes: {
+					target: '_blank',
+				},
+			}),
 			TextAlign.configure({
 				types: ['paragraph'],
 			}),
@@ -29,7 +45,13 @@ const Tiptap = () => {
 			},
 		},
 	});
-
+	const onImageSelect = (image: string) => {
+		editor
+			?.chain()
+			.focus()
+			.setImage({ src: image, alt: 'This is alt sample' })
+			.run();
+	};
 	return (
 		<>
 			<div className="h-screen flex flex-col space-y-6">
@@ -55,9 +77,13 @@ const Tiptap = () => {
 					</button>
 				</div>
 			</div>
-			<ImageGallery visible={showImageGallery} onClose={setShowImageGallery} />
+			<ImageGallery
+				onSelect={onImageSelect}
+				visible={showImageGallery}
+				onClose={setShowImageGallery}
+			/>
 		</>
 	);
 };
 
-export default Tiptap;
+export default RichEditor;

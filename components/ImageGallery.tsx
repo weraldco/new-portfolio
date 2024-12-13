@@ -1,15 +1,30 @@
-import React from 'react';
+import { removeImage, uploadFile } from '@/app/actions/file';
+import { useImages } from '@/app/context/ImageProvider';
+import React, { useState } from 'react';
 import { FileUploader } from 'react-drag-drop-files';
 import { IoIosCloudUpload, IoMdClose } from 'react-icons/io';
 import GalleryImage from './GalleryImage';
 interface Props {
 	visible: boolean;
 	onClose(state: boolean): void;
+	onSelect?(state: string): void;
+	// onDelete?(state: boolean): void;
 }
 
-export default function ImageGallery({ visible, onClose }: Props) {
+export default function ImageGallery({ visible, onClose, onSelect }: Props) {
+	const [isUploading, setIsUploading] = useState(false);
+	const image = useImages();
+	const images = image?.images;
+	const updateImages = image?.updateImages;
+	const removeOldImages = image?.removeOldImages;
+
 	const handleClose = () => {
 		onClose(!visible);
+	};
+
+	const handleSelection = (image: string) => {
+		onSelect && onSelect(image);
+		handleClose();
 	};
 	if (!visible) return null;
 	return (
@@ -27,8 +42,19 @@ export default function ImageGallery({ visible, onClose }: Props) {
 					</button>
 				</div>
 				<FileUploader
-					handleChange={(file: File) => {
-						console.log(file);
+					handleChange={async (file: File) => {
+						setIsUploading(true);
+						try {
+							const formData = new FormData();
+							formData.append('file', file);
+							const res = await uploadFile(formData);
+							if (res && updateImages) {
+								updateImages([res.secure_url]);
+							}
+						} catch (error) {
+							console.log(error);
+						}
+						setIsUploading(false);
 					}}
 					name="file"
 					types={['png', 'jpg', 'jpeg', 'webp']}
@@ -53,11 +79,38 @@ export default function ImageGallery({ visible, onClose }: Props) {
 					</div>
 				</FileUploader>
 
-				<p className="p-4 text-center text-2xl font-semibold opacity-50">
-					No Images
-				</p>
+				{!images?.length ? (
+					<p className="p-4 text-center text-2xl font-semibold opacity-50">
+						No Images
+					</p>
+				) : null}
 				<div className="grid md:grid-cols-4 grid-cols-2 mt-4 gap-4">
-					<GalleryImage src="/earth.jpg" />
+					{/* <GalleryImage src="/earth.jpg" /> */}
+					{isUploading && (
+						<div className="w-full aspect-square rounded animate-pulse bg-gray-200"></div>
+					)}
+					{images?.map((item, i) => {
+						return (
+							<GalleryImage
+								onSelectClick={() => handleSelection(item)}
+								onDeleteClick={async () => {
+									if (confirm('Are you sure?')) {
+										const id = item
+											.split('/')
+											.slice(-2)
+											.join('/')
+											.split('.')[0];
+										await removeImage(id);
+										if (removeOldImages) {
+											removeOldImages(item);
+										}
+									}
+								}}
+								key={i}
+								src={item}
+							/>
+						);
+					})}
 				</div>
 			</div>
 		</div>

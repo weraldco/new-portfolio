@@ -45,6 +45,8 @@ const RichEditor = () => {
 			},
 		},
 	});
+
+	console.log(editor?.getHTML());
 	const onImageSelect = (image: string) => {
 		editor
 			?.chain()
@@ -54,8 +56,8 @@ const RichEditor = () => {
 	};
 	return (
 		<>
-			<div className="h-screen flex flex-col space-y-6">
-				<div className="sticky top-0 bg-white z-50">
+			<div className="h-screen flex flex-col space-y-6 bg-gray-300  justify-center">
+				<div className="sticky top-0 bg-white z-50 flex items-center justify-center">
 					<Tools
 						editor={editor}
 						onImageSelection={() => setShowImageGallery(true)}
@@ -64,7 +66,7 @@ const RichEditor = () => {
 				<div className="flex-1">
 					<EditorContent editor={editor} className="h-full" />
 				</div>
-				<div className="p-4 text-right">
+				{/* <div className="p-4 text-right">
 					<button
 						onClick={() => {
 							// The result should be this one.
@@ -75,7 +77,7 @@ const RichEditor = () => {
 					>
 						Create new post
 					</button>
-				</div>
+				</div> */}
 			</div>
 			<ImageGallery
 				onSelect={onImageSelect}

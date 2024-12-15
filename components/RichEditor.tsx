@@ -7,11 +7,15 @@ import TextAlign from '@tiptap/extension-text-align';
 import Underline from '@tiptap/extension-underline';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ImageGallery from './ImageGallery';
 import Tools from './Tools';
 
-const RichEditor = () => {
+interface Props {
+	onValueChange: (value: string) => void;
+}
+
+const RichEditor = ({ onValueChange }: Props) => {
 	const [showImageGallery, setShowImageGallery] = useState(false);
 	const editor = useEditor({
 		extensions: [
@@ -38,15 +42,23 @@ const RichEditor = () => {
 		],
 		// content: '<h1>Hello World! 🌎️</h1>',
 		immediatelyRender: false,
+		onUpdate: ({ editor }) => {
+			const json = editor.getJSON();
+			const html = editor.getHTML();
+
+			onValueChange(html);
+		},
 		editorProps: {
 			attributes: {
-				class:
-					'prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl outline-none',
+				class: 'prose lg:prose-base  outline-none',
 			},
 		},
 	});
-
-	console.log(editor?.getHTML());
+	useEffect(() => {
+		return () => {
+			editor?.destroy();
+		};
+	}, [editor]);
 	const onImageSelect = (image: string) => {
 		editor
 			?.chain()
@@ -54,17 +66,18 @@ const RichEditor = () => {
 			.setImage({ src: image, alt: 'This is alt sample' })
 			.run();
 	};
+
 	return (
 		<>
-			<div className="h-screen flex flex-col space-y-6 bg-gray-300  justify-center">
-				<div className="sticky top-0 bg-white z-50 flex items-center justify-center">
+			<div className=" flex flex-col space-y-4  justify-center">
+				<div className="sticky top-0 bg-white z-50 flex items-center justify-center border-b border-gray-600">
 					<Tools
 						editor={editor}
 						onImageSelection={() => setShowImageGallery(true)}
 					/>
 				</div>
-				<div className="flex-1">
-					<EditorContent editor={editor} className="h-full" />
+				<div className="flex-1 ">
+					<EditorContent editor={editor} className="min-h-[200px] " />
 				</div>
 				{/* <div className="p-4 text-right">
 					<button

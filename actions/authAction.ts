@@ -46,26 +46,3 @@ export async function testTransaction() {
 
 	console.log(session);
 }
-
-// BLOGS ACTIONS
-export const addNewBlogPost = async (values: any) => {
-	try {
-		const { title, content } = values;
-		await db.posts.create({ data: values });
-	} catch (error) {
-		console.log(error);
-	} finally {
-		revalidatePath('/dashboard/blogs/add-posts');
-		redirect('/dashboard/blogs');
-	}
-};
-
-export const getAllPosts = async () => {
-	try {
-		const data = await db.posts.findMany({});
-
-		return data;
-	} catch (error) {
-		console.error(error);
-	}
-};

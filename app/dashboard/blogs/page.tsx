@@ -1,4 +1,5 @@
-import { getAllPosts } from '@/actions/authAction';
+import { getAllPosts } from '@/actions/postActions';
+import parse from 'html-react-parser';
 import React from 'react';
 
 export default async function DashboardBlogPage() {
@@ -12,7 +13,7 @@ export default async function DashboardBlogPage() {
 						<li key={post.id} className=" bg-gray-300">
 							<div className="flex flex-col gap-1">
 								<h1 className="text-xl font-semibold">{post.title}</h1>
-								<div>{post.content}</div>
+								<div className="prose lg:prose-base">{parse(post.content)}</div>
 							</div>
 						</li>
 					))}

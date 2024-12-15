@@ -11,6 +11,7 @@ export default function ToolButton({ children, activate, onClick }: Props) {
 		<button
 			className={clsx('p-2', activate ? 'bg-black text-white' : 'text-black')}
 			onClick={onClick}
+			type="button"
 		>
 			{children}
 		</button>

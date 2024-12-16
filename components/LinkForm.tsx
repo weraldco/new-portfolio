@@ -27,6 +27,7 @@ const LinkForm = ({ onSubmit }: Props) => {
 						placeholder="https://example.com"
 					/>
 					<button
+						type="button"
 						onClick={() => {
 							setLink('');
 							setShowForm(false);

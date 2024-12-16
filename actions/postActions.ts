@@ -12,6 +12,7 @@ export const getPostDetails = async (formData: FormData) => {
 export const addNewBlogPost = async (values: FormData) => {
 	const rawData = {
 		title: values.get('title') as string,
+		img_url: values.get('img-url') as string,
 		content: values.get('content') as string,
 	};
 	try {
@@ -31,6 +32,15 @@ export const getAllPosts = async () => {
 		const data = await db.posts.findMany({});
 
 		return data;
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export const getPostById = async (id: string) => {
+	try {
+		const post = await db.posts.findUnique({ where: { id } });
+		return post;
 	} catch (error) {
 		console.error(error);
 	}

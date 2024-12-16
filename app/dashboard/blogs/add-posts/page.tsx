@@ -1,16 +1,14 @@
 'use client';
-import { addNewBlogPost, getPostDetails } from '@/actions/postActions';
-import AddBlogPost from '@/components/AddBlogPost';
+import { addNewBlogPost } from '@/actions/postActions';
+import ImageGallery from '@/components/ImageGallery';
 
 import { default as RichEditor } from '@/components/RichEditor';
-import React, { FormEvent, useState } from 'react';
-
-interface Props {
-	// formData: FormData;
-	e: any;
-}
+import Image from 'next/image';
+import React, { useState } from 'react';
 
 export default function AddPosts() {
+	const [showImageGallery, setShowImageGallery] = useState(false);
+	const [selectedImage, setSelectedImage] = useState('');
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
 	const handleEditorChange = (value: string) => {
@@ -20,8 +18,16 @@ export default function AddPosts() {
 		event.preventDefault();
 		const formData = new FormData();
 		formData.append('title', title);
+		formData.append('img-url', selectedImage);
 		formData.append('content', content);
 		await addNewBlogPost(formData);
+	};
+
+	const handleOnclick = () => {
+		setShowImageGallery(true);
+	};
+	const onImageSelect = (image: string) => {
+		setSelectedImage(image);
 	};
 	return (
 		<div className="max-w-3xl mx-auto p-4">
@@ -43,6 +49,24 @@ export default function AddPosts() {
 						id="title"
 					/>
 				</div>
+				<label
+					onClick={handleOnclick}
+					htmlFor="title"
+					className="text-sm text-gray-600 cursor-pointer"
+				>
+					Upload Image Banner (click here)
+				</label>
+				<div>
+					{selectedImage && (
+						<Image
+							src={selectedImage}
+							alt="banner-image"
+							width={600}
+							height={600}
+							className="w-full"
+						></Image>
+					)}
+				</div>
 				<div>
 					<label htmlFor="title" className="text-sm text-gray-600">
 						Post Content
@@ -55,6 +79,11 @@ export default function AddPosts() {
 					Submit
 				</button>
 			</form>
+			<ImageGallery
+				onSelect={onImageSelect}
+				visible={showImageGallery}
+				onClose={setShowImageGallery}
+			/>
 		</div>
 	);
 }

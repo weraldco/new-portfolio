@@ -10,7 +10,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Form, FormDescription } from '@/components/ui/form';
 
-import { addNewBlogPost } from '@/actions/authAction';
+import { addNewBlogPost } from '@/actions/postActions';
 import { blogSchema } from '@/lib/blogSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
@@ -28,7 +28,7 @@ export default function AddBlogPost() {
 	});
 
 	async function onSubmit(values: z.infer<typeof blogSchema>) {
-		await addNewBlogPost(values);
+		console.log(values);
 	}
 	return (
 		<div className="flex items-center justify-center">

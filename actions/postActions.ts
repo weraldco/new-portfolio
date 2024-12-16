@@ -13,7 +13,8 @@ export const addNewBlogPost = async (values: FormData) => {
 	const rawData = {
 		title: values.get('title') as string,
 		img_url: values.get('img-url') as string,
-		content: values.get('content') as string,
+		contentHTML: values.get('htmlContent') as string,
+		contentJSON: values.get('jsonContent') as string,
 	};
 	try {
 		await db.posts.create({

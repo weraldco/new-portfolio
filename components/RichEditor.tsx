@@ -5,14 +5,14 @@ import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
 import TextAlign from '@tiptap/extension-text-align';
 import Underline from '@tiptap/extension-underline';
-import { EditorContent, useEditor } from '@tiptap/react';
+import { EditorContent, JSONContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { useEffect, useState } from 'react';
 import ImageGallery from './ImageGallery';
 import Tools from './Tools';
 
 interface Props {
-	onValueChange: (value: string) => void;
+	onValueChange: ({ html, json }: { html: string; json: JSONContent }) => void;
 }
 
 const RichEditor = ({ onValueChange }: Props) => {
@@ -46,7 +46,7 @@ const RichEditor = ({ onValueChange }: Props) => {
 			const json = editor.getJSON();
 			const html = editor.getHTML();
 
-			onValueChange(html);
+			onValueChange({ html, json });
 		},
 		editorProps: {
 			attributes: {

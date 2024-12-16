@@ -21,10 +21,11 @@ model User {
 }
 
 model Posts {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  title     String   @unique
-  img_url   String?
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String   @unique
+  img_url     String?
+  contentHTML String
+  contentJSON String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

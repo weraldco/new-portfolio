@@ -98,3 +98,9 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+@layer utilities {
+	.content-title h1 {
+		@apply text-blue-900 mb-1;
+	}
+}

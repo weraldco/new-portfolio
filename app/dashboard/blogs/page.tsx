@@ -9,14 +9,16 @@ export default async function DashboardBlogPage() {
 	return (
 		<div className="flex flex-col  items-center justify-center ">
 			<div className="flex flex-col items-center justify-center w-[640px] md:w-[768px] lg:w-[1024px]">
-				<h1 className="text-2xl font-bold">Dashboard Blog Page</h1>
+				<h1 className="text-3xl font-bold">Dashboard Blog Page</h1>
 				<ul className="flex flex-col gap-4">
-					{data &&
+					{/* {data &&
 						data.map((post) => (
 							<li key={post.id} className="">
 								<div className="flex items-center justify-between">
 									<div>
-										<h1 className="text-xl font-semibold">{post.title}</h1>
+										<Link href={`/dashboard/blogs/${post.id}`}>
+											<h1 className="text-xl font-semibold">{post.title}</h1>
+										</Link>
 										<div>Dec 12 2024 - 8:00 AM</div>
 									</div>
 									<div className="flex gap-2">
@@ -44,10 +46,10 @@ export default async function DashboardBlogPage() {
 									</div>
 								)}
 								<div className="prose md:prose-base lg:prose-xl">
-									{parse(post.content)}
+									{parse(post.contentHTML)}
 								</div>
 							</li>
-						))}
+						))} */}
 				</ul>
 			</div>
 		</div>

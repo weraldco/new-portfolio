@@ -3,6 +3,7 @@ import { addNewBlogPost } from '@/actions/postActions';
 import ImageGallery from '@/components/ImageGallery';
 
 import { default as RichEditor } from '@/components/RichEditor';
+import { JSONContent } from '@tiptap/react';
 import Image from 'next/image';
 import React, { useState } from 'react';
 
@@ -10,16 +11,26 @@ export default function AddPosts() {
 	const [showImageGallery, setShowImageGallery] = useState(false);
 	const [selectedImage, setSelectedImage] = useState('');
 	const [title, setTitle] = useState('');
-	const [content, setContent] = useState('');
-	const handleEditorChange = (value: string) => {
-		setContent(value);
+	const [htmlContent, setHtmlContent] = useState('');
+	const [jsonContent, setJsonContent] = useState('');
+	const handleEditorChange = ({
+		html,
+		json,
+	}: {
+		html: string;
+		json: JSONContent;
+	}) => {
+		setHtmlContent(html);
+		setJsonContent(JSON.stringify(json));
 	};
 	const formSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 		const formData = new FormData();
 		formData.append('title', title);
 		formData.append('img-url', selectedImage);
-		formData.append('content', content);
+		formData.append('htmlContent', htmlContent);
+		formData.append('jsonContent', jsonContent);
+
 		await addNewBlogPost(formData);
 	};
 
@@ -69,7 +80,7 @@ export default function AddPosts() {
 				</div>
 				<div>
 					<label htmlFor="title" className="text-sm text-gray-600">
-						Post Content
+						Post htmlContent
 					</label>
 					<div className="border border-gray-600 rounded p-2">
 						<RichEditor onValueChange={handleEditorChange} />

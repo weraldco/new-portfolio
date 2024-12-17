@@ -6,7 +6,7 @@ import PostContent from './PostContent';
 export interface Post {
 	id: string;
 	title: string;
-	img_url: string;
+	img_url: string | null;
 	contentHTML: string;
 	contentJSON: string;
 	createdAt: Date;

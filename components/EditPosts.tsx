@@ -2,15 +2,6 @@
 import { getPostById } from '@/actions/postActions';
 import React, { useEffect, useState } from 'react';
 
-// interface Post {
-// 	id: string;
-// 	title: string;
-// 	img_url: string;
-// 	content: string;
-// 	createdAt: Date;
-// 	updatedAt: Date;
-// }
-
 interface Props {
 	postId: string;
 }

@@ -1,4 +1,5 @@
 'use client';
+import parse from 'html-react-parser';
 
 import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
@@ -13,9 +14,10 @@ import Tools from './Tools';
 
 interface Props {
 	onValueChange: ({ html, json }: { html: string; json: JSONContent }) => void;
+	content?: string;
 }
 
-const RichEditor = ({ onValueChange }: Props) => {
+const RichEditor = ({ onValueChange, content }: Props) => {
 	const [showImageGallery, setShowImageGallery] = useState(false);
 	const editor = useEditor({
 		extensions: [
@@ -40,7 +42,7 @@ const RichEditor = ({ onValueChange }: Props) => {
 			}),
 			Placeholder.configure({ placeholder: 'Write something..' }),
 		],
-		// content: '<h1>Hello World! 🌎️</h1>',
+		content: content ? parse(content) : '',
 		immediatelyRender: false,
 		onUpdate: ({ editor }) => {
 			const json = editor.getJSON();
@@ -67,6 +69,7 @@ const RichEditor = ({ onValueChange }: Props) => {
 			.run();
 	};
 
+	console.log(typeof content);
 	return (
 		<>
 			<div className=" flex flex-col space-y-4  justify-center">

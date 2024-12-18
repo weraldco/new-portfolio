@@ -25,13 +25,10 @@ const BlogItemCard = ({ post }: { post: Post }) => {
 		return newStr + '..';
 	};
 
-	const test = post.contentHTML.split('.');
-	console.log(typeof test);
-	console.log(test[0]);
 	return (
 		<Link
 			href={post && `/dashboard/blogs/${post.id}`}
-			className="group flex flex-col overflow-hidden h-[500px] hover:scale-105 duration-200"
+			className="group flex flex-col overflow-hidden h-[500px] hover:scale-105 duration-200 "
 		>
 			{post.img_url && (
 				<div className="w-full h-[250px] rounded-lg relative bg-gray-600 ">
@@ -43,15 +40,13 @@ const BlogItemCard = ({ post }: { post: Post }) => {
 						className=" h-full w-full  object-cover"
 					></Image>
 					<div className="absolute bg-gray-50 bottom-0 left-0 right-0 bg-opacity-50 text-gray-900 p-2 group-hover:bg-teal-300 group-hover:bg-opacity-30 duration-200">
-						<Link href={`/dashboard/blogs/${post.id}`}>
-							<h1 className="text-xl font-semibold">{post.title}</h1>
-						</Link>
+						<h1 className="text-xl font-semibold">{post.title}</h1>
 						<span className="text-sm text-gray-600">Dec 12 2024 - 8:00 AM</span>
 					</div>
 				</div>
 			)}
 
-			<div className="flex flex-col p-2 gap-2 overflow-hidden">
+			<div className="flex flex-col p-2 gap-2 overflow-hidden ">
 				<div className="flex items-center justify-between">
 					{/* <div className="flex gap-2">
 					<Link
@@ -68,6 +63,7 @@ const BlogItemCard = ({ post }: { post: Post }) => {
 
 				<div className="text-base text-gray-700">
 					{/* {parse(post.contentHTML)} */}
+					{/* {parse(trimContent(post.contentHTML))} */}
 					{trimContent(contentText)}
 				</div>
 			</div>

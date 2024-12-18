@@ -9,7 +9,6 @@ interface Props {
 	post: Post;
 }
 const PostContent = ({ post }: Props) => {
-	console.log(post.contentHTML);
 	return (
 		<div className="flex flex-col prose md:prose-base lg:prose-lg">
 			<div className="flex items-center justify-between leading-1">
@@ -34,13 +33,15 @@ const PostContent = ({ post }: Props) => {
 					</Link>
 				</div>
 			</div>
-			<Image
-				src={post.img_url}
-				width={400}
-				height={400}
-				className="w-full"
-				alt={post.title}
-			></Image>
+			{post.img_url && (
+				<Image
+					src={post.img_url}
+					width={400}
+					height={400}
+					className="w-full"
+					alt={post.title}
+				></Image>
+			)}
 			<div className="content">{parse(post.contentHTML)}</div>
 		</div>
 	);

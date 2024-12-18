@@ -1,11 +1,12 @@
-import EditPostsForm from '@/components/EditPosts';
+'use client';
+import EditPostsForm from '@/components/EditPostForm';
 import React from 'react';
 
 interface Props {
 	params: { id: string };
 }
 
-const EditPostPage = async ({ params }: Props) => {
+const EditPostPage = ({ params }: Props) => {
 	const id = params.id;
 	return <div>{<EditPostsForm postId={id} />}</div>;
 };

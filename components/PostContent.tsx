@@ -25,12 +25,12 @@ const PostContent = ({ post }: Props) => {
 					>
 						edit
 					</Link>
-					<Link
+					{/* <Link
 						href={``}
 						className="px-2 py-1 border border-gray-500 hover:bg-gray-300 active:bg-gray-400 text-gray-700 rounded-full duration-200 no-underline text-xs font-normal"
 					>
 						delete
-					</Link>
+					</Link> */}
 				</div>
 			</div>
 			{post.img_url && (
@@ -40,6 +40,7 @@ const PostContent = ({ post }: Props) => {
 					height={400}
 					className="w-full"
 					alt={post.title}
+					priority
 				></Image>
 			)}
 			<div className="content">{parse(post.contentHTML)}</div>

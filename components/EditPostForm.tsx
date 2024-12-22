@@ -1,5 +1,5 @@
 'use client';
-import { addNewBlogPost } from '@/actions/postActions';
+import { addNewBlogPost, updateBlogPost } from '@/actions/postActions';
 import ImageGallery from '@/components/ImageGallery';
 
 import { getPostById } from '@/actions/postActions';
@@ -48,9 +48,11 @@ const EditPostsForm = ({ postId }: Props) => {
 
 	useEffect(() => {
 		const setStateValue = () => {
+			1;
 			try {
-				if (post?.img_url) {
+				if (post?.img_url && post.contentHTML) {
 					setSelectedImage(post.img_url);
+					setHtmlContent(post.contentHTML);
 				}
 			} catch (error) {
 				console.error(error);
@@ -67,7 +69,7 @@ const EditPostsForm = ({ postId }: Props) => {
 		formData.append('htmlContent', htmlContent);
 		formData.append('jsonContent', jsonContent);
 
-		await addNewBlogPost(formData);
+		await updateBlogPost(formData, postId);
 	};
 
 	const handleOnclick = () => {
@@ -77,12 +79,14 @@ const EditPostsForm = ({ postId }: Props) => {
 		setSelectedImage(image);
 	};
 
-	console.log(post === null ? null : 't');
+	// console.log('IMG: ', selectedImage);
+	// console.log('PostData: ', htmlContent);
+	// console.log('POST ID:', postId);
 	return (
 		<div>
 			<div>
 				<form onSubmit={formSubmit} className="flex flex-col gap-4">
-					<h1 className="text-2xl font-bold">Adding New Post</h1>
+					<h1 className="text-2xl font-bold">Editting Post</h1>
 					<div>
 						<label htmlFor="title" className="text-sm text-gray-600">
 							Post Title
@@ -113,6 +117,7 @@ const EditPostsForm = ({ postId }: Props) => {
 								width={600}
 								height={600}
 								className="w-full"
+								priority
 							></Image>
 						)}
 					</div>
@@ -121,10 +126,12 @@ const EditPostsForm = ({ postId }: Props) => {
 							Post htmlContent
 						</label>
 						<div className="border border-gray-600 rounded p-2">
-							<RichEditor
-								onValueChange={handleEditorChange}
-								content={post?.contentHTML}
-							/>
+							{post?.contentHTML && (
+								<RichEditor
+									onValueChange={handleEditorChange}
+									content={post.contentHTML}
+								/>
+							)}
 						</div>
 					</div>
 					<button type="submit" className="bg-blue-500 text-white p-2 rounded">

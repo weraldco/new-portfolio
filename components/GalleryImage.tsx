@@ -20,6 +20,7 @@ export default function GalleryImage({
 				width={100}
 				height={100}
 				className="w-full h-full object-cover "
+				priority
 			/>
 			<div className="hidden group-hover:flex absolute bottom-0 right-0 left-0">
 				<button

@@ -76,6 +76,7 @@ const AddPostForm = () => {
 							width={600}
 							height={600}
 							className="w-full"
+							priority
 						></Image>
 					)}
 				</div>

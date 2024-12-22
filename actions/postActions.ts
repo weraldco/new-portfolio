@@ -28,6 +28,28 @@ export const addNewBlogPost = async (values: FormData) => {
 	}
 };
 
+export const updateBlogPost = async (values: FormData, id: string) => {
+	const rawData = {
+		title: values.get('title') as string,
+		img_url: values.get('img-url') as string,
+		contentHTML: values.get('htmlContent') as string,
+		contentJSON: values.get('jsonContent') as string,
+	};
+	try {
+		await db.posts.update({
+			where: {
+				id,
+			},
+			data: rawData,
+		});
+	} catch (error) {
+		console.log(error);
+	} finally {
+		revalidatePath('/dashboard/blogs/edit-posts');
+		redirect('/dashboard/blogs');
+	}
+};
+
 export const getAllPosts = async () => {
 	try {
 		const data = await db.posts.findMany({});

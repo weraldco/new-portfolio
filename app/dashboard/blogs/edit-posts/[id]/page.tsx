@@ -8,7 +8,9 @@ interface Props {
 
 const EditPostPage = ({ params }: Props) => {
 	const id = params.id;
-	return <div>{<EditPostsForm postId={id} />}</div>;
+	return (
+		<div className="max-w-3xl mx-auto p-4">{<EditPostsForm postId={id} />}</div>
+	);
 };
 
 export default EditPostPage;

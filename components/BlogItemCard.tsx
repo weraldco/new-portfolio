@@ -38,6 +38,7 @@ const BlogItemCard = ({ post }: { post: Post }) => {
 						width={300}
 						height={300}
 						className=" h-full w-full  object-cover"
+						priority
 					></Image>
 					<div className="absolute bg-gray-50 bottom-0 left-0 right-0 bg-opacity-50 text-gray-900 p-2 group-hover:bg-teal-300 group-hover:bg-opacity-30 duration-200">
 						<h1 className="text-xl font-semibold">{post.title}</h1>

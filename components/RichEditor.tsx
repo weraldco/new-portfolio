@@ -19,6 +19,7 @@ interface Props {
 
 const RichEditor = ({ onValueChange, content }: Props) => {
 	const [showImageGallery, setShowImageGallery] = useState(false);
+
 	const editor = useEditor({
 		extensions: [
 			StarterKit,
@@ -42,7 +43,7 @@ const RichEditor = ({ onValueChange, content }: Props) => {
 			}),
 			Placeholder.configure({ placeholder: 'Write something..' }),
 		],
-		content: content ? parse(content) : '',
+		content: content,
 		immediatelyRender: false,
 		onUpdate: ({ editor }) => {
 			const json = editor.getJSON();
@@ -69,7 +70,6 @@ const RichEditor = ({ onValueChange, content }: Props) => {
 			.run();
 	};
 
-	console.log(typeof content);
 	return (
 		<>
 			<div className=" flex flex-col space-y-4  justify-center">

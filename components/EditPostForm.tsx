@@ -28,7 +28,7 @@ const EditPostsForm = ({ postId }: Props) => {
 		setHtmlContent(html);
 		setJsonContent(JSON.stringify(json));
 	};
-	const [post, setPost] = useState<Post>();
+	const [post, setPost] = useState<Post | null>(null);
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
@@ -77,7 +77,7 @@ const EditPostsForm = ({ postId }: Props) => {
 		setSelectedImage(image);
 	};
 
-	console.log(selectedImage);
+	console.log(post === null ? null : 't');
 	return (
 		<div>
 			<div>

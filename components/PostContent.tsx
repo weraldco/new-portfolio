@@ -9,6 +9,15 @@ interface Props {
 	post: Post;
 }
 const PostContent = ({ post }: Props) => {
+	const date = post.createdAt.toLocaleDateString('en-PH', {
+		month: 'short',
+		day: '2-digit',
+		year: 'numeric',
+	});
+	const time = post.createdAt.toLocaleTimeString('en-PH', {
+		hour: '2-digit',
+		minute: '2-digit',
+	});
 	return (
 		<div className="flex flex-col prose md:prose-base lg:prose-lg">
 			<div className="flex items-center justify-between leading-1">
@@ -16,7 +25,9 @@ const PostContent = ({ post }: Props) => {
 					<div className="content-title">
 						<h1 className=" font-bold text-3xl">{post.title}</h1>
 					</div>
-					<div className="text-sm italic">Dec 12 2024 - 8:00 AM</div>
+					<div className="text-sm italic">
+						<span className="font-bold text-sm">Posted: </span> {date} - {time}
+					</div>
 				</div>
 				<div className="flex gap-2">
 					<Link

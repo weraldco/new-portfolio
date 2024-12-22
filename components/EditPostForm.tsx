@@ -53,6 +53,7 @@ const EditPostsForm = ({ postId }: Props) => {
 				if (post?.img_url && post.contentHTML) {
 					setSelectedImage(post.img_url);
 					setHtmlContent(post.contentHTML);
+					setTitle(post.title);
 				}
 			} catch (error) {
 				console.error(error);

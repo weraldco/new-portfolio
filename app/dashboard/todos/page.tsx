@@ -49,6 +49,7 @@ const TodoPage = async () => {
 			</div>
 
 			<div>
+				{/* Todo list items here */}
 				<ul className="flex flex-col gap-2">
 					{todosItem &&
 						todosItem.map((todo) => <TodosItem key={todo.id} todo={todo} />)}

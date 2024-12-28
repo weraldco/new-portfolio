@@ -1,9 +1,10 @@
+'use client';
 import clsx from 'clsx';
 import React, { useState } from 'react';
 import { FaCheckCircle, FaRegCheckCircle } from 'react-icons/fa';
 
 interface TodoItemsT {
-	id: number;
+	id: string;
 	content: string;
 	done: boolean;
 	priority: string;
@@ -22,9 +23,9 @@ const TodosItem = ({ todo }: TodoT) => {
 		<li
 			className={clsx(
 				'flex p-2 w-full rounded-full text-white',
-				todo.priority == 'high'
+				todo.priority == 'High'
 					? 'bg-red-500'
-					: todo.priority == 'medium'
+					: todo.priority == 'Medium'
 					? 'bg-orange-500'
 					: 'bg-yellow-500'
 			)}

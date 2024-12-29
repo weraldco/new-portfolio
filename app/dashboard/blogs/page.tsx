@@ -1,5 +1,5 @@
 import { getAllPosts } from '@/actions/postActions';
-import BlogItemCard from '@/components/BlogItemCard';
+import BlogItemCard from '@/components/blog/BlogItemCard';
 import Link from 'next/link';
 
 import React from 'react';

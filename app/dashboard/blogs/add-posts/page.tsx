@@ -1,4 +1,4 @@
-import AddPostForm from '@/components/AddPostForm';
+import AddPostForm from '@/components/blog/AddPostForm';
 
 export default function AddPosts() {
 	return (

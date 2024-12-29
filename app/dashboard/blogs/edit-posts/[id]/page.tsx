@@ -1,5 +1,5 @@
 'use client';
-import EditPostsForm from '@/components/EditPostForm';
+import EditPostsForm from '@/components/blog/EditPostForm';
 import React from 'react';
 
 interface Props {

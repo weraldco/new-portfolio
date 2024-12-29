@@ -1,4 +1,4 @@
-import PostItem from '@/components/PostItem';
+import PostItem from '@/components/blog/PostItem';
 import React from 'react';
 
 interface Props {

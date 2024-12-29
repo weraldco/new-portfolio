@@ -1,9 +1,9 @@
 'use client';
 import { addNewBlogPost, updateBlogPost } from '@/actions/postActions';
-import ImageGallery from '@/components/ImageGallery';
+import ImageGallery from '@/components/richeditor/ImageGallery';
 
 import { getPostById } from '@/actions/postActions';
-import { default as RichEditor } from '@/components/RichEditor';
+import { default as RichEditor } from '@/components/richeditor/RichEditor';
 import { JSONContent } from '@tiptap/react';
 import Image from 'next/image';
 import { default as React, useEffect, useState } from 'react';

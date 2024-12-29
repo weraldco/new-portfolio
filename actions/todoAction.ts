@@ -31,3 +31,10 @@ export const getAllTodos = async () => {
 		console.error(error);
 	}
 };
+
+export const doneTask = async (id: string) => {
+	try {
+	} catch (error) {
+		console.error(error);
+	}
+};

@@ -4,38 +4,7 @@ import Link from 'next/link';
 
 const TodoPage = async () => {
 	const todosItem = await getAllTodos();
-	// const todosItem = [
-	// 	{
-	// 		id: 1,
-	// 		content: 'Study algorithm and data structure',
-	// 		done: false,
-	// 		priority: 'high', // high, medium, low
-	// 	},
-	// 	{
-	// 		id: 2,
-	// 		content: 'Exercise for 30 mins.',
-	// 		done: false,
-	// 		priority: 'medium', // high, medium, low
-	// 	},
-	// 	{
-	// 		id: 2,
-	// 		content: 'Pay bills this month.',
-	// 		done: false,
-	// 		priority: 'medium', // high, medium, low
-	// 	},
-	// 	{
-	// 		id: 2,
-	// 		content: 'Cook breakfast',
-	// 		done: false,
-	// 		priority: 'low', // high, medium, low
-	// 	},
-	// 	{
-	// 		id: 2,
-	// 		content: 'Buy to the groceries.',
-	// 		done: false,
-	// 		priority: 'low', // high, medium, low
-	// 	},
-	// ];
+
 	return (
 		<div className="flex w-[640px] mx-auto flex-col py-4 gap-2">
 			<div className="flex flex-row gap-4 items-center justify-between">

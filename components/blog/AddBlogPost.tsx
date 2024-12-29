@@ -10,30 +10,31 @@ import {
 import { Button } from '@/components/ui/button';
 import { Form, FormDescription } from '@/components/ui/form';
 
-import { signInFormSchema } from '@/lib/authSchema';
+import { addNewBlogPost } from '@/actions/postActions';
+import { blogSchema } from '@/lib/blogSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { FormFieldElement } from './FormFieldElement';
+import { FormFieldElement } from '../FormFieldElement';
 
-export default function SigninForm() {
-	const form = useForm<z.infer<typeof signInFormSchema>>({
-		resolver: zodResolver(signInFormSchema),
+export default function AddBlogPost() {
+	const form = useForm<z.infer<typeof blogSchema>>({
+		resolver: zodResolver(blogSchema),
 		defaultValues: {
-			email: '',
-			password: '',
+			title: '',
+			content: '',
 		},
 	});
 
-	function onSubmit(values: z.infer<typeof signInFormSchema>) {
+	async function onSubmit(values: z.infer<typeof blogSchema>) {
 		console.log(values);
 	}
 	return (
 		<div className="flex items-center justify-center">
 			<Card className="w-[350px]">
 				<CardHeader>
-					<CardTitle className="text-xl">Admin Login Form</CardTitle>
+					<CardTitle className="text-xl">Adding new post</CardTitle>
 					<CardDescription>Welcome back to admin login.</CardDescription>
 				</CardHeader>
 				<CardContent>
@@ -41,24 +42,25 @@ export default function SigninForm() {
 						<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 							<FormFieldElement
 								formControl={form.control}
-								name="email"
-								label="Email"
-								placeHolder="Enter your email.."
+								name="title"
+								label="Title"
+								placeHolder="Enter your title.."
 								type="text"
 							/>
+							{/* Should be textarea. */}
 							<FormFieldElement
 								formControl={form.control}
-								name="password"
-								label="Password"
-								placeHolder="Enter your password.."
-								type="password"
+								name="content"
+								label="Content"
+								placeHolder="Enter your content.."
+								type="text"
 							/>
 
 							<FormDescription className="text-red-500">
 								(Error message here!)
 							</FormDescription>
 							<Button className="w-full p-6" type="submit">
-								Login
+								Add post
 							</Button>
 						</form>
 					</Form>

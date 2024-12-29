@@ -34,6 +34,24 @@ export const getAllTodos = async () => {
 
 export const doneTask = async (id: string) => {
 	try {
+		const done = await db.todos.findUnique({
+			where: { id },
+			select: { done: true },
+		});
+		const doneData = done?.done === false ? true : false;
+
+		await db.todos.update({ where: { id }, data: { done: doneData } });
+	} catch (error) {
+		console.error(error);
+	} finally {
+		revalidatePath('/dashboard/todos');
+	}
+};
+
+export const getSingleTodo = async (id: string) => {
+	try {
+		const todo = await db.todos.findUnique({ where: { id } });
+		return todo;
 	} catch (error) {
 		console.error(error);
 	}

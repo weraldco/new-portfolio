@@ -1,6 +1,7 @@
 'use client';
+import { doneTask, getSingleTodo } from '@/actions/todoAction';
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaCheckCircle, FaRegCheckCircle } from 'react-icons/fa';
 
 interface TodoItemsT {
@@ -15,10 +16,14 @@ interface TodoT {
 }
 
 const TodosItem = ({ todo }: TodoT) => {
-	const [isCheck, setIsCheck] = useState(todo.done);
-	const handleClick = () => {
-		setIsCheck((prev) => !isCheck);
+	const handleClick = async (id: string) => {
+		try {
+			await doneTask(id);
+		} catch (error) {
+			console.error(error);
+		}
 	};
+
 	return (
 		<li
 			className={clsx(
@@ -32,10 +37,10 @@ const TodosItem = ({ todo }: TodoT) => {
 		>
 			<div className="flex gap-2 ">
 				<div
-					onClick={handleClick}
+					onClick={() => handleClick(todo.id)}
 					className="cursor-pointer flex items-center gap-2"
 				>
-					{isCheck ? (
+					{todo.done ? (
 						<FaCheckCircle size={24} />
 					) : (
 						<FaRegCheckCircle size={24} />

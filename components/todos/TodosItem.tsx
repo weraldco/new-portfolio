@@ -1,8 +1,15 @@
 'use client';
-import { doneTask, getSingleTodo } from '@/actions/todoAction';
+import { deleteTodo, doneTask } from '@/actions/todoAction';
 import clsx from 'clsx';
-import React, { useEffect, useState } from 'react';
-import { FaCheckCircle, FaRegCheckCircle } from 'react-icons/fa';
+import React from 'react';
+import {
+	IoIosCheckmarkCircle,
+	IoIosCheckmarkCircleOutline,
+} from 'react-icons/io';
+import { IoTrashOutline } from 'react-icons/io5';
+
+import { LiaEditSolid } from 'react-icons/lia';
+import EditTodo from './EditTodo';
 
 interface TodoItemsT {
 	id: string;
@@ -23,6 +30,13 @@ const TodosItem = ({ todo }: TodoT) => {
 			console.error(error);
 		}
 	};
+	const handleDeleteClick = async (id: string) => {
+		try {
+			await deleteTodo(id);
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
 	return (
 		<li
@@ -35,18 +49,29 @@ const TodosItem = ({ todo }: TodoT) => {
 					: 'bg-yellow-500'
 			)}
 		>
-			<div className="flex gap-2 ">
-				<div
-					onClick={() => handleClick(todo.id)}
-					className="cursor-pointer flex items-center gap-2"
-				>
-					{todo.done ? (
-						<FaCheckCircle size={24} />
-					) : (
-						<FaRegCheckCircle size={24} />
-					)}
+			<div className="flex flex-row gap-2 justify-between items-center  w-full">
+				<div className="flex gap-2">
+					<div
+						onClick={() => handleClick(todo.id)}
+						className="cursor-pointer flex items-center gap-2"
+					>
+						{todo.done ? (
+							<IoIosCheckmarkCircleOutline size={24} />
+						) : (
+							<IoIosCheckmarkCircle size={24} />
+						)}
+					</div>
+					<span>{todo.content}</span>
 				</div>
-				<span>{todo.content}</span>
+				<div className="flex gap-1 items-center">
+					<EditTodo id={todo.id} />
+					<div
+						onClick={() => handleDeleteClick(todo.id)}
+						className="flex opacity-50 hover:opacity-100 duration-200 cursor-pointer"
+					>
+						<IoTrashOutline size={18} />
+					</div>
+				</div>
 			</div>
 		</li>
 	);

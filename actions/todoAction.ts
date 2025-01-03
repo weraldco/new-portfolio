@@ -32,6 +32,15 @@ export const getAllTodos = async () => {
 	}
 };
 
+export const getSingleTodo = async (id: string) => {
+	try {
+		const todo = await db.todos.findUnique({ where: { id } });
+		return todo;
+	} catch (error) {
+		console.error(error);
+	}
+};
+
 export const doneTask = async (id: string) => {
 	try {
 		const done = await db.todos.findUnique({
@@ -48,11 +57,22 @@ export const doneTask = async (id: string) => {
 	}
 };
 
-export const getSingleTodo = async (id: string) => {
+export const deleteTodo = async (id: string) => {
 	try {
-		const todo = await db.todos.findUnique({ where: { id } });
-		return todo;
+		await db.todos.delete({ where: { id } });
 	} catch (error) {
 		console.error(error);
+	} finally {
+		revalidatePath('/dashboard/todos');
+	}
+};
+
+export const updateTodo = async (data: z.infer<typeof todoSchema>) => {
+	try {
+		await db.todos.update({ where: { id }, data: data });
+	} catch (error) {
+		console.error;
+	} finally {
+		revalidatePath('/dashboard/todos');
 	}
 };

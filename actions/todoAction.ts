@@ -67,7 +67,10 @@ export const deleteTodo = async (id: string) => {
 	}
 };
 
-export const updateTodo = async (data: z.infer<typeof todoSchema>) => {
+export const updateTodo = async (
+	data: z.infer<typeof todoSchema>,
+	id: string
+) => {
 	try {
 		await db.todos.update({ where: { id }, data: data });
 	} catch (error) {

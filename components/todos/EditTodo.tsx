@@ -33,20 +33,13 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { todoSchema } from '@/lib/todoSchema';
 import { DialogClose } from '@radix-ui/react-dialog';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LiaEditSolid } from 'react-icons/lia';
 
 const EditTodo = ({ id }: { id: string }) => {
 	const [content, setContent] = useState('');
 	const [priority, setPriority] = useState('');
 
-	const handleClick = async (id: string) => {
-		const currTodo = await getSingleTodo(id);
-		if (currTodo) {
-			setContent(currTodo.content);
-			setPriority(currTodo.priority);
-		}
-	};
 	const form = useForm<z.infer<typeof todoSchema>>({
 		resolver: zodResolver(todoSchema),
 		defaultValues: {
@@ -55,20 +48,39 @@ const EditTodo = ({ id }: { id: string }) => {
 		},
 	});
 
+	useEffect(() => {
+		const dataSet = async (id: string) => {
+			const currTodo = await getSingleTodo(id);
+			if (currTodo) {
+				setContent(currTodo.content);
+				setPriority(currTodo.priority);
+			}
+		};
+
+		dataSet(id);
+	}, [id]);
+
+	const handleClick = () => {
+		form.setValue('content', content);
+		form.setValue('priority', priority);
+	};
 	async function onSubmit(data: z.infer<typeof todoSchema>) {
 		try {
-			// await updateTodo(data);
-			console.log(typeof data);
+			console.log('Data: ', data);
+			console.log('ID: ', id);
+
+			await updateTodo(data, id);
 		} catch (error) {
 			console.error(error);
 		}
 	}
+
 	return (
 		<div>
 			<Dialog>
 				<DialogTrigger asChild>
 					<div
-						onClick={() => handleClick(id)}
+						onClick={handleClick}
 						className="flex opacity-50 hover:opacity-100 duration-200 cursor-pointer"
 					>
 						<LiaEditSolid size={22} />
@@ -79,65 +91,74 @@ const EditTodo = ({ id }: { id: string }) => {
 						<DialogTitle>Edit todo</DialogTitle>
 						<DialogDescription></DialogDescription>
 					</DialogHeader>
-					<Form {...form}>
-						<form
-							onSubmit={form.handleSubmit(onSubmit)}
-							className=" space-y-6  w-full"
-						>
-							<FormField
-								control={form.control}
-								name="content"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Todo Content</FormLabel>
-										<FormControl>
-											<Textarea
-												placeholder="What's your todo?"
-												className="resize-none size-full"
-												{...field}
-												defaultValue={content}
-												onChange={(e) => setContent(e.target.value)}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="priority"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Priority</FormLabel>
-										<Select
-											onValueChange={(e) => {
-												setPriority(e);
-											}}
-											defaultValue={priority}
-										>
+					{content != '' && priority != '' ? (
+						<Form {...form}>
+							<form
+								onSubmit={form.handleSubmit(onSubmit)}
+								className=" space-y-6  w-full"
+							>
+								<FormField
+									control={form.control}
+									name="content"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Todo Content</FormLabel>
 											<FormControl>
-												<SelectTrigger>
-													<SelectValue placeholder="Priority level of todo" />
-												</SelectTrigger>
+												{field.value !== '' ? (
+													<Textarea
+														placeholder="What's your todo?"
+														className="resize-none size-full"
+														{...field}
+													/>
+												) : (
+													<Textarea
+														placeholder="What's your todo?"
+														className="resize-none size-full"
+													/>
+												)}
 											</FormControl>
-											<SelectContent>
-												<SelectItem value="High">High</SelectItem>
-												<SelectItem value="Medium">Medium</SelectItem>
-												<SelectItem value="Low">Low</SelectItem>
-											</SelectContent>
-										</Select>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="priority"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Priority</FormLabel>
+											{field.value != '' && (
+												<Select
+													onValueChange={field.onChange}
+													defaultValue={field.value}
+												>
+													<FormControl>
+														<SelectTrigger>
+															<SelectValue placeholder="Priority level of todo" />
+														</SelectTrigger>
+													</FormControl>
+													<SelectContent>
+														<SelectItem value="High">High</SelectItem>
+														<SelectItem value="Medium">Medium</SelectItem>
+														<SelectItem value="Low">Low</SelectItem>
+													</SelectContent>
+												</Select>
+											)}
 
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<DialogClose asChild>
-								<Button type="submit" className="w-full">
-									Update todo
-								</Button>
-							</DialogClose>
-						</form>
-					</Form>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<DialogClose asChild>
+									<Button type="submit" className="w-full">
+										Update todo
+									</Button>
+								</DialogClose>
+							</form>
+						</Form>
+					) : (
+						'Loading..'
+					)}
 				</DialogContent>
 			</Dialog>
 		</div>

@@ -42,7 +42,9 @@ const TodosItem = ({ todo }: TodoT) => {
 		<li
 			className={clsx(
 				'flex p-2 w-full rounded-full text-white',
-				todo.priority == 'High'
+				todo.done
+					? 'bg-green-400'
+					: todo.priority == 'High'
 					? 'bg-red-500'
 					: todo.priority == 'Medium'
 					? 'bg-orange-500'
@@ -56,9 +58,9 @@ const TodosItem = ({ todo }: TodoT) => {
 						className="cursor-pointer flex items-center gap-2"
 					>
 						{todo.done ? (
-							<IoIosCheckmarkCircleOutline size={24} />
-						) : (
 							<IoIosCheckmarkCircle size={24} />
+						) : (
+							<IoIosCheckmarkCircleOutline size={24} />
 						)}
 					</div>
 					<span>{todo.content}</span>

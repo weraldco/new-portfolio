@@ -66,9 +66,6 @@ const EditTodo = ({ id }: { id: string }) => {
 	};
 	async function onSubmit(data: z.infer<typeof todoSchema>) {
 		try {
-			console.log('Data: ', data);
-			console.log('ID: ', id);
-
 			await updateTodo(data, id);
 		} catch (error) {
 			console.error(error);
@@ -86,7 +83,7 @@ const EditTodo = ({ id }: { id: string }) => {
 						<LiaEditSolid size={22} />
 					</div>
 				</DialogTrigger>
-				<DialogContent className="sm:max-w-md">
+				<DialogContent className="sm:max-w-md w-[90%] rounded-xl">
 					<DialogHeader>
 						<DialogTitle>Edit todo</DialogTitle>
 						<DialogDescription></DialogDescription>

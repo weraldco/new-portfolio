@@ -58,7 +58,7 @@ const AddTodoForm = () => {
 						Add todo
 					</Button>
 				</DialogTrigger>
-				<DialogContent className="sm:max-w-md">
+				<DialogContent className="sm:max-w-md w-[90%] rounded-xl">
 					<DialogHeader>
 						<DialogTitle>Add new todo</DialogTitle>
 						<DialogDescription></DialogDescription>

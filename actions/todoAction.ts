@@ -32,6 +32,15 @@ export const getAllTodos = async () => {
 	}
 };
 
+export const getTodosByQuery = async (query: any) => {
+	try {
+		const todos = await db.todos.findMany({ where: query });
+		return todos;
+	} catch (error) {
+		console.error(error);
+	}
+};
+
 export const getSingleTodo = async (id: string) => {
 	try {
 		const todo = await db.todos.findUnique({ where: { id } });

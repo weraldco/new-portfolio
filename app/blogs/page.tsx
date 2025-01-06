@@ -9,9 +9,7 @@ export default async function DashboardBlogPage() {
 	return (
 		<div className="flex flex-col  w-[640px] md:w-[768px] lg:w-[1024px]">
 			<div className="flex flex-row justify-between items-center  p-5">
-				<h1 className="text-3xl font-bold text-blue-900">
-					Dashboard Blog Page
-				</h1>
+				<h1 className="text-3xl font-bold text-blue-900">My Blogs</h1>
 				<Link
 					href={'/dashboard/blogs/add-posts'}
 					className="px-2 py-1 border-blue-900 border rounded-full hover:bg-gray-200 active:bg-gray-300 duration-200 "

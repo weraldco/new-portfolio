@@ -27,7 +27,7 @@ const BlogItemCard = ({ post }: { post: Post }) => {
 
 	return (
 		<Link
-			href={post && `/dashboard/blogs/${post.id}`}
+			href={post && `/blogs/${post.id}`}
 			className="group flex flex-col overflow-hidden h-[500px] hover:scale-105 duration-200 "
 		>
 			{post.img_url && (

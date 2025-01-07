@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+	scroll-behavior: smooth;
+}
 .tiptap p.is-editor-empty:first-child::before {
 	color: #adb5bd;
 	content: attr(data-placeholder);
@@ -119,4 +122,12 @@
 	.content-title h1 {
 		@apply text-blue-900 mb-1;
 	}
+}
+
+section:nth-child(odd) {
+	background-color: #181818;
+}
+
+.active {
+	color: rgb(10, 162, 162);
 }

@@ -1,3 +1,4 @@
+'use client';
 import { Bungee_Outline, Quicksand } from 'next/font/google';
 
 import Link from 'next/link';
@@ -20,20 +21,20 @@ const Navbar = () => {
 				{/* <Link className="p-1 border border-b-gray-200" href="/dashboard">
 					Dashboard
 				</Link> */}
-				<Link className="p-1" href="/services">
+				<Link className="active p-1" href="/#about">
 					About
 				</Link>
-				<Link className="p-1" href="/services">
+				<Link className="p-1" href="/#services">
 					Services
 				</Link>
-				<Link className="p-1" href="/works">
+				<Link className="p-1" href="#works">
 					Works
 				</Link>
 
-				<Link className="p-1" href="/contacts">
+				<Link className="p-1" href="#contacts">
 					Contacts
 				</Link>
-				<Link className="p-1" href="/blogs">
+				<Link className="p-1" href="#blogs">
 					Blogs
 				</Link>
 			</div>

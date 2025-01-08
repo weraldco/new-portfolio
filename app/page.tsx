@@ -1,20 +1,41 @@
 'use client';
 import Navbar from '@/components/navbar/Navbar';
 import SectionItem from '@/components/SectionItem';
-import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
-	const [pathHash, setPathHash] = useState('');
+	const [sections, setSections] = useState<any>();
+	const [navLinks, setNavLinks] = useState<any>();
 
 	useEffect(() => {
-		const currentHash = window.location.hash;
-		setPathHash(currentHash);
+		setSections(() => document.querySelectorAll('section'));
+		setNavLinks(() => document.querySelectorAll('nav div a'));
 	}, []);
 
-	const url = window.location.href.split('/');
+	if (sections && navLinks) {
+		window.onscroll = () => {
+			sections.forEach((sec) => {
+				let top = window.scrollY;
+				let offset = sec.offsetTop;
 
-	console.log(url);
+				let height = sec.offsetHeight;
+
+				let id = sec.getAttribute('id');
+
+				if (top >= offset && top < offset + height) {
+					console.log('yes');
+
+					navLinks.forEach((links) => {
+						links.classList.remove('active');
+						console.log(id);
+						document
+							.querySelector('nav div a[href="#' + id + '"]')
+							?.classList.add('active');
+					});
+				}
+			});
+		};
+	}
 	return (
 		<>
 			<Navbar />
